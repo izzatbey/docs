@@ -23,7 +23,7 @@ const config: Config = {
   projectName: "docs", // Usually your repo name.
 
   onBrokenLinks: "throw",
-  onBrokenMarkdownLinks: "warn",
+  onBrokenMarkdownLinks: "throw",
 
   trailingSlash: false,
 
