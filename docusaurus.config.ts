@@ -33,23 +33,6 @@ const config: Config = {
   i18n: {
     defaultLocale: "en",
     locales: ["en"],
-    // path: 'i18n',
-    // localeConfigs: {
-    //   en: {
-    //     label: 'English',
-    //     direction: 'ltr',
-    //     htmlLang: 'en-US',
-    //     calendar: 'gregory',
-    //     path: 'en',
-    //   },
-    //   fa: {
-    //     label: 'Indonesia',
-    //     direction: 'rtl',
-    //     htmlLang: 'id-ID',
-    //     calendar: 'gregory',
-    //     path: 'id',
-    //   },
-    // },
   },
 
   markdown: {
