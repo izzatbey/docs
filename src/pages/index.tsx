@@ -24,7 +24,7 @@ function HomepageHeader() {
         <div className={styles.buttons}>
           <Link
             className="button button--secondary button--lg"
-            to={`/docs/${versions.sort().reverse()[0]}/quick-start`}>
+            to="/docs/2.0.0/quick-start">
             <Translate>Quick Start Guide 🚀</Translate>
           </Link>
         </div>

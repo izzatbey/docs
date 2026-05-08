@@ -1,8 +1,8 @@
 import type * as Preset from "@docusaurus/preset-classic";
 import type { Config } from "@docusaurus/types";
 import { themes as prismThemes } from "prism-react-renderer";
-import versions from './versions.json';
-import VersionsArchived from './versionsArchived.json';
+import versions from "./versions.json";
+import VersionsArchived from "./versionsArchived.json";
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...);
 
@@ -23,7 +23,6 @@ const config: Config = {
   projectName: "docs", // Usually your repo name.
 
   onBrokenLinks: "throw",
-  onBrokenMarkdownLinks: "warn",
 
   trailingSlash: false,
 
@@ -33,27 +32,13 @@ const config: Config = {
   i18n: {
     defaultLocale: "en",
     locales: ["en"],
-    // path: 'i18n',
-    // localeConfigs: {
-    //   en: {
-    //     label: 'English',
-    //     direction: 'ltr',
-    //     htmlLang: 'en-US',
-    //     calendar: 'gregory',
-    //     path: 'en',
-    //   },
-    //   fa: {
-    //     label: 'Indonesia',
-    //     direction: 'rtl',
-    //     htmlLang: 'id-ID',
-    //     calendar: 'gregory',
-    //     path: 'id',
-    //   },
-    // },
   },
 
   markdown: {
     mermaid: true,
+    hooks: {
+      onBrokenMarkdownLinks: "throw",
+    },
   },
 
   themes: ["@docusaurus/theme-mermaid"],
@@ -71,12 +56,12 @@ const config: Config = {
           lastVersion: "2.0.0",
           includeCurrentVersion: false,
           versions: {
-            // current: {
-            //   label: "canary",
-            //   path: "canary",
-            //   banner: 'unreleased',
-            //   badge: true,
-            // },
+            "2.1.0": {
+              label: "2.1.0",
+              path: "2.1.0",
+              banner: "unreleased",
+              badge: true,
+            },
             "2.0.0": {
               label: "2.0.0 (latest)",
               path: "2.0.0",
@@ -91,8 +76,8 @@ const config: Config = {
               label: "1.0.0",
               path: "1.0.0",
               badge: true,
-              banner: 'unmaintained',
-            }
+              banner: "unmaintained",
+            },
           },
         },
         blog: {
@@ -124,7 +109,7 @@ const config: Config = {
       respectPrefersColorScheme: true,
     },
     mermaid: {
-      theme: {light: 'neutral', dark: 'dark'},
+      theme: { light: "neutral", dark: "dark" },
     },
     // Replace with your project's social card
     image: "img/logo-me-red.png",
@@ -143,40 +128,38 @@ const config: Config = {
         },
         { to: "/blog", label: "Blog", position: "left" },
         {
-          type: 'search',
-          position: 'right',
+          type: "search",
+          position: "right",
         },
         {
-          type: 'docsVersionDropdown',
-          position: 'right',
+          type: "docsVersionDropdown",
+          position: "right",
           // dropdownItemsAfter: [{to: '/versions', label: 'All versions'}],
           dropdownItemsAfter: [
             {
-              type: 'html',
+              type: "html",
               value: '<hr class="dropdown-separator">',
             },
             {
-              type: 'html',
-              className: 'dropdown-archived-versions',
-              value: '<b>Archived versions</b>',
+              type: "html",
+              className: "dropdown-archived-versions",
+              value: "<b>Archived versions</b>",
             },
-            ...VersionsArchived.map(
-              (versionName) => ({
-                label: versionName,
-                to: `/docs/${versionName}/intro`,
-              }),
-            ),
+            ...VersionsArchived.map((versionName) => ({
+              label: versionName,
+              to: `/docs/${versionName}/intro`,
+            })),
             {
-              type: 'html',
+              type: "html",
               value: '<hr class="dropdown-separator">',
             },
             {
-              to: '/versions',
-              label: 'All versions',
+              to: "/versions",
+              label: "All versions",
             },
           ],
           dropdownActiveClassDisabled: true,
-          label: 'Version:',
+          label: "Version:",
         },
         // {
         //   type: 'localeDropdown',
@@ -203,7 +186,7 @@ const config: Config = {
           items: [
             {
               label: "Tutorial",
-              to: `/docs/${versions.sort().reverse()[0]}/quick-start`,
+              to: `/docs/2.0.0/quick-start`,
             },
           ],
         },
@@ -239,9 +222,13 @@ const config: Config = {
     prism: {
       theme: prismThemes.oneLight,
       darkTheme: prismThemes.oneDark,
-      additionalLanguages: ['bash', 'yaml'],
+      additionalLanguages: ["bash", "yaml"],
     },
   } satisfies Preset.ThemeConfig,
+  future: {
+    v4: true,
+    faster: true,
+  },
 };
 
 export default config;
