@@ -3,7 +3,7 @@ title: OpenSearch Dashboard
 sidebar_position: 10
 ---
 
-Here is how you monitor the Mata Elang v2 system using OpenSearch Dashboard.
+Here is how you monitor the Mata Elang v2.1 system using OpenSearch Dashboard.
 
 First, you have to open OpenSearch Dashboard page on your browser. You will have to input your credential.
 ![image](uploads/d143583d02f5f501f135a9c935f97f6e/image.png)

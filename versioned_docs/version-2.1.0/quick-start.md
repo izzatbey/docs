@@ -399,7 +399,7 @@ groupId="installation-method"
 
    services:
    snort:
-     image: ghcr.io/mata-elang-stable/snort3-docker-image:v2.0-debian
+     image: ghcr.io/mata-elang-stable/snort3-docker-image:v2.1-debian
      restart: unless-stopped
      network_mode: host
      env_file:

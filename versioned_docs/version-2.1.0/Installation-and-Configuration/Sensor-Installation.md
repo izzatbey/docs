@@ -26,7 +26,7 @@ docker -v
 
 ### Downloading Installation Media
 
-▶️ Clone [Mata Elang v2 Sensor](https://github.com/mata-elang-stable/example-docker-deployment.git) from GitHub to your defense center machine.
+▶️ Clone [Mata Elang v2.1 Sensor](https://github.com/mata-elang-stable/example-docker-deployment.git) from GitHub to your defense center machine.
 
 ⚠️ You can skip this step if you already set your defense center.
 
@@ -161,6 +161,6 @@ docker compose ps -a
 
 ```bash
 NAME                          IMAGE                                                       COMMAND                  SERVICE        CREATED         STATUS                                  PORTS
-sensor_snort-snort-1          ghcr.io/mata-elang-stable/snort3-docker-image:v2.0-debian   "/usr/local/bin/star…"   snort          3 seconds ago   Up 2 seconds
+sensor_snort-snort-1          ghcr.io/mata-elang-stable/snort3-docker-image:v2.1-debian   "/usr/local/bin/star…"   snort          3 seconds ago   Up 2 seconds
 sensor_snort-snort-parser-1   ghcr.io/mata-elang-stable/sensor-snort-service:latest       "/go/bin/app client …"   snort-parser   3 seconds ago   Up 2 seconds
 ```
