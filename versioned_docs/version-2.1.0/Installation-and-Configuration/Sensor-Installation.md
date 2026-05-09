@@ -37,19 +37,20 @@ git clone https://github.com/mata-elang-stable/example-docker-deployment.git
 ▶️ Find **sensor_snort** folder, and check for its contained files.
 
 ```bash
-cd example-docker-deployment/sensor_snort/ && tree --dirsfirst -L 1
+cd example-docker-deployment/sensor_snort/ && tree --dirsfirst -L 1 -a
 ```
 
 🔑 You shall expect this result
 
 ```bash
+$ tree --dirsfirst -L 1 -a
 .
-├── rules
+├── rules/
 ├── compose.yml
 ├── custom.rules
+├── .env.example
+├── .gitignore
 └── readme.md
-
-2 directories, 3 files
 ```
 
 ### Configuring Enviroment
@@ -68,7 +69,7 @@ You will have a new file titled **.env**.
 nano .env
 ```
 
-#### 🔑 .env's default variable values:
+#### 🔑 .env's default variable values
 
 ```bash
 ###############################
@@ -114,6 +115,11 @@ NETWORK_INTERFACE=eth0
 # default: balanced
 #IPS_POLICY=balanced
 
+# Listener to use (beta), still not working properly, use file listener instead
+# Possible values: file, socket
+# default: file
+#LISTENER=file
+
 ###############################
 # Mata Elang: Sensor Parser
 ###############################
@@ -133,6 +139,35 @@ MES_CLIENT_PORT=50051
 # Unique ID of the sensor in the MES server
 # default: sensor1
 MES_CLIENT_SENSOR_ID=sensor1
+
+# Path to Snort alert JSON file (default: /var/log/snort/alert_json.txt)
+MES_CLIENT_FILE=/var/log/snort/alert_json.txt
+
+# Path to Snort alert unix socket — mutually exclusive with MES_CLIENT_FILE
+# Use this if you set LISTENER=socket in the Snort configuration
+# MES_CLIENT_SOCKET=/var/log/snort/snort_alert
+
+# Interval between batch sends to gRPC server (default: 1s)
+MES_CLIENT_INTERVAL=1s
+
+# Maximum concurrent gRPC stream clients (default: 10)
+MES_CLIENT_MAX_CLIENTS=10
+
+# Maximum gRPC message size in MB (default: 100)
+MES_CLIENT_MAX_MESSAGE_SIZE=100
+
+# -- gRPC TLS (enabled by default) --
+# Enable TLS for gRPC client connection
+MES_CLIENT_SECURE=true
+
+# Path to CA certificate for server certificate verification
+MES_CLIENT_CERTIFICATE=/secrets/ca.crt
+
+# Server name for TLS hostname verification (must match CN/SAN in server cert)
+MES_CLIENT_SERVER_NAME=sensor-api
+
+# Increase log verbosity: 1=debug, 2+=trace (default: 0)
+#MES_CLIENT_VERBOSE=0
 ```
 
 :warning: **NOTE:** You may change the values to meet your needs. :warning:
