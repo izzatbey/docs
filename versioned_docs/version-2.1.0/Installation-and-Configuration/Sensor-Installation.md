@@ -30,7 +30,7 @@ docker -v
 
 ⚠️ You can skip this step if you already set your defense center.
 
-```
+```bash
 git clone https://github.com/mata-elang-stable/example-docker-deployment.git
 ```
 
