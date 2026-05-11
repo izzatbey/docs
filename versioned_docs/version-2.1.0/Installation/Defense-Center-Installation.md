@@ -1,6 +1,6 @@
 ---
 title: Mata Elang Defense Center
-sidebar_position: 1
+sidebar_position: 3
 ---
 
 ## Architecture
