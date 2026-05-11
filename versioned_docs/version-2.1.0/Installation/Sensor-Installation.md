@@ -22,6 +22,28 @@ sudo apt update && sudo apt -y upgrade
 docker -v
 ```
 
+## Generating TLS Certificates
+
+The sensor communicates with the Defense Center over **mutual TLS (mTLS)**. Before installing the sensor, you must generate the CA certificate that the sensor uses to verify the gRPC server.
+
+🔑 **If you are deploying the Defense Center on the same machine**, follow the complete guide at [Certificate Generation](./Certificate-Generation.md) to generate all required certificates.
+
+🔑 **If the sensor is on a separate machine**, generate certificates on the Defense Center host first, then copy the CA certificate to the sensor host:
+
+```bash
+# On the Defense Center host
+cd example-docker-deployment
+cp config.example.toml config.toml
+# Edit config.toml: change ssl.password to a secure password
+nano config.toml
+./generate.sh
+
+# Copy CA cert to sensor host
+scp ssl_certs/ca/ca.crt user@sensor-host:/path/to/example-docker-deployment/ssl_certs/ca/ca.crt
+```
+
+> ⚠️ **Important:** The `ca.crt` file must exist at `ssl_certs/ca/ca.crt` relative to the repository root before starting the sensor.
+
 ## Configurating and Installing Sensor
 
 ### Downloading Installation Media
@@ -30,26 +52,27 @@ docker -v
 
 ⚠️ You can skip this step if you already set your defense center.
 
-```
+```bash
 git clone https://github.com/mata-elang-stable/example-docker-deployment.git
 ```
 
 ▶️ Find **sensor_snort** folder, and check for its contained files.
 
 ```bash
-cd example-docker-deployment/sensor_snort/ && tree --dirsfirst -L 1
+cd example-docker-deployment/sensor_snort/ && tree --dirsfirst -L 1 -a
 ```
 
 🔑 You shall expect this result
 
 ```bash
+$ tree --dirsfirst -L 1 -a
 .
-├── rules
+├── rules/
 ├── compose.yml
 ├── custom.rules
+├── .env.example
+├── .gitignore
 └── readme.md
-
-2 directories, 3 files
 ```
 
 ### Configuring Enviroment
@@ -68,72 +91,44 @@ You will have a new file titled **.env**.
 nano .env
 ```
 
-#### 🔑 .env's default variable values:
+#### 🔑 .env's default variable values
 
 ```bash
 ###############################
 # Mata Elang: Sensor Snort
 ###############################
 
-# Snort OINKCODE is required to download rules from snort.org
-# If you don't have an OINKCODE, you can register at https://www.snort.org/users/sign_up
-# and get a free OINKCODE for registered users.
-# OINKCODE is not required for community rules
-# default:
-#SNORT_OINKCODE=
-
 # Network interface to listen on
-# default: eth0
 NETWORK_INTERFACE=eth0
-
-# Uncomment this if you need to install or update rules from files
-# this should be absolute path inside the container.
-#   ex: /tmp/rules/filename.tar.gz
-# default:
-#SNORT_COMPRESSED_RULES_FILE_PATH=
-
-# Uncomment this if you need to install or update rules from snort.org
-# Possible values: community, registered, lightspd
-# registered and lightspd require SNORT_OINKCODE to be set
-# default: community
-#RULESET=community
-
-# Uncomment this if you need to use blocklist
-# Possible values: true, false
-# default: false
-#SNORT_BLOCKLIST=false
-#ET_BLOCKLIST=false
-
-# Uncomment this if you need to use blocklist
-# URLs to download blocklist from (comma separated)
-# default:
-#BLOCKLIST_URLS=
-
-# IPS policy to use
-# Possible values: connectivity, balanced, security, max-detect, none
-# default: balanced
-#IPS_POLICY=balanced
 
 ###############################
 # Mata Elang: Sensor Parser
 ###############################
 
-# Path to the snort alert file
-# default: /var/log/snort/alert_json.txt
-#MES_CLIENT_FILE=/var/log/snort/alert_json.txt
-
 # IP address of the Mata Elang Defense System (MES) server
-# default: localhost
 MES_CLIENT_SERVER=172.17.0.1
 
 # Port of the MES server
-# default: 50051
 MES_CLIENT_PORT=50051
 
 # Unique ID of the sensor in the MES server
-# default: sensor1
 MES_CLIENT_SENSOR_ID=sensor1
+
+# Path to Snort alert JSON file
+MES_CLIENT_FILE=/var/log/snort/alert_json.txt
+
+# Interval between batch sends to gRPC server
+MES_CLIENT_INTERVAL=1s
+
+# -- gRPC TLS --
+MES_CLIENT_SECURE=true
+MES_CLIENT_CERTIFICATE=/secrets/ca.crt
+MES_CLIENT_SERVER_NAME=sensor-api
 ```
+
+🔑 Set `MES_CLIENT_SENSOR_ID` to a unique name for this sensor (e.g., `sensor-office-1`, `sensor-dc-1`). This ID appears in the OpenSearch Dashboards to identify which sensor generated each alert.
+
+> 📖 For the complete list of configuration options, see [Sensor Configuration](../Configurations/Sensor-Configuration.md).
 
 :warning: **NOTE:** You may change the values to meet your needs. :warning:
 

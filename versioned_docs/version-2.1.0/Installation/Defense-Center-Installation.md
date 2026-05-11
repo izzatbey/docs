@@ -8,7 +8,7 @@ sidebar_position: 1
 ✅ Ubuntu 24.04 LTS installed and updated with the following command.
 
 ```bashsidebar_position: 1
-sudo apt update && sudo apt -y full-upgrade
+sudo apt update && sudo apt -y upgrade
 ```
 
 ✅ Docker 27.3 or later installed with the following command.
@@ -26,7 +26,7 @@ docker -v
 
 ### Download Installation Media
 
-▶️ Clone [Mata Elang v2.1 Defense Center](https://github.com/mata-elang-stable/example-docker-deployment.git) from GitHub to your defense center machine.
+▶️ Clone [Mata Elang v2 Defense Center](https://github.com/mata-elang-stable/example-docker-deployment.git) from GitHub to your defense center machine.
 
 ```bash
 git clone https://github.com/mata-elang-stable/example-docker-deployment.git
